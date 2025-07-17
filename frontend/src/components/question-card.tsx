@@ -9,6 +9,7 @@ import { Question } from "@/types/quizzes.types";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
+import { Checkbox } from "./ui/checkbox";
 
 type QuizCardProps = {
   question: Question;
@@ -40,19 +41,20 @@ const QuestionCard = ({ question }: QuizCardProps) => {
         );
       case "CHECKBOX":
         return (
-          <RadioGroup disabled>
+          <div className="space-y-2">
             {question.options.map((option, index) => (
               <div key={index} className="flex items-center gap-3">
-                <RadioGroupItem
-                  value={option}
+                <Checkbox
                   id={`${question.id}-option-${index}`}
+                  checked={question.correct.includes(option)}
+                  disabled
                 />
                 <Label htmlFor={`${question.id}-option-${index}`}>
                   {option}
                 </Label>
               </div>
             ))}
-          </RadioGroup>
+          </div>
         );
       default:
         return <p className="text-muted-foreground">Unknown question type.</p>;
@@ -63,7 +65,9 @@ const QuestionCard = ({ question }: QuizCardProps) => {
     <Card className="max-w-md my-2 shadow-lg w-full">
       <CardHeader>
         <CardTitle>{question.text}</CardTitle>
-        <CardDescription>Correct answer: {question.correct}</CardDescription>
+        <CardDescription>
+          Correct answer(s): {question.correct.join(", ")}
+        </CardDescription>
       </CardHeader>
       <CardContent>{renderQuestionContent()}</CardContent>
     </Card>

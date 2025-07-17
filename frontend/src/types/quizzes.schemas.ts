@@ -1,4 +1,5 @@
 import z from "zod";
+import { QuestionType } from "./quizzes.types";
 
 const baseQuestionSchema = z.object({
   text: z.string().min(1, "Question text is required"),
@@ -10,15 +11,15 @@ export const quizCreationFormSchema = z.object({
     .array(
       z.discriminatedUnion("type", [
         baseQuestionSchema.extend({
-          type: z.literal("BOOLEAN"),
+          type: z.literal(QuestionType.BOOLEAN),
           correct: z.enum(["True", "False"]),
         }),
         baseQuestionSchema.extend({
-          type: z.literal("INPUT"),
+          type: z.literal(QuestionType.INPUT),
           correct: z.string().min(1, "Correct answer is required"),
         }),
         baseQuestionSchema.extend({
-          type: z.literal("CHECKBOX"),
+          type: z.literal(QuestionType.CHECKBOX),
           options: z
             .array(z.string())
             .min(2, "You must provide at least two options.")

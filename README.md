@@ -1,6 +1,6 @@
 # quiz-builder
 
-Quiz Builder App. Project consists of frontend (**Next.js**) and backend (**Node.js + Express.js + PosgreSQL(Prisma)**)
+Quiz Builder App. Project consists of frontend (**Next.js**) and backend (**Node.js + Express.js + PostgreSQL(Prisma)**)
 
 ---
 
@@ -63,7 +63,7 @@ Run this commands in `backend`:
 pnpm db:up
 ```
 
-Wait 5-10 seconds for DB to start
+Wait 5-10 seconds for DB to startup
 
 ```bash
 pnpm prisma:migrate
@@ -84,4 +84,4 @@ pnpm prisma:seed
 Once the application is running, you can access it as follows, assuming you left all environment variables untouched (using default settings from `.env.example`):
 
 - **Frontend**: [http://localhost:3000](http://localhost:3000)
-- **Backend API Documentation**: [http://localhost:8000/api](http://localhost:8000/api)
+- **Backend**: [http://localhost:8000/api](http://localhost:8000)

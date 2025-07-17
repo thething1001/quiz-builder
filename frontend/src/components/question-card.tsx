@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Question } from "@/types/quizzes.types";
+import { Question, QuestionType } from "@/types/quizzes.types";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
@@ -18,9 +18,9 @@ type QuizCardProps = {
 const QuestionCard = ({ question }: QuizCardProps) => {
   const renderQuestionContent = () => {
     switch (question.type) {
-      case "BOOLEAN":
+      case QuestionType.BOOLEAN:
         return (
-          <RadioGroup disabled>
+          <RadioGroup disabled value={question.correct[0].toLocaleLowerCase()}>
             <div className="flex items-center gap-3">
               <RadioGroupItem value="true" id={`${question.id}-radio-1`} />
               <Label htmlFor={`${question.id}-radio-1`}>True</Label>
@@ -31,15 +31,15 @@ const QuestionCard = ({ question }: QuizCardProps) => {
             </div>
           </RadioGroup>
         );
-      case "INPUT":
+      case QuestionType.INPUT:
         return (
           <Input
             type="text"
-            placeholder="Enter your answer..."
+            value={question.correct.join(", ")}
             disabled
           ></Input>
         );
-      case "CHECKBOX":
+      case QuestionType.CHECKBOX:
         return (
           <div className="space-y-2">
             {question.options.map((option, index) => (
@@ -62,7 +62,7 @@ const QuestionCard = ({ question }: QuizCardProps) => {
   };
 
   return (
-    <Card className="max-w-md my-2 shadow-lg w-full">
+    <Card className="max-w-md w-full">
       <CardHeader>
         <CardTitle>{question.text}</CardTitle>
         <CardDescription>

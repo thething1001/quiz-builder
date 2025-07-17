@@ -1,29 +1,32 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "next-themes";
+import Providers from "@/components/providers";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Quiz Builder",
-  description: "Quiz Builder App",
+  description: "Quiz Builder App – Create and manage quizzes",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
-      <body className="antialiased w-svw h-svh flex justify-center overflow-x-hidden">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="p-4 flex flex-col gap-4 container">
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased w-vw h-vh flex justify-center overflow-x-hidden">
+        <Providers>
+          <div className="p-4 flex flex-col gap-4 container min-h-screen">
             <Header />
             {children}
             <Footer />
           </div>
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

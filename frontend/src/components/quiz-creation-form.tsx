@@ -23,13 +23,14 @@ import {
 } from "@/types/quizzes.schemas";
 import QuestionFormCard from "./question-form-card";
 import { redirect } from "next/navigation";
+import { QuestionType } from "@/types/quizzes.types";
 
 export default function QuizCreationForm() {
   const form = useForm<QuizCreationFormSchema>({
     resolver: zodResolver(quizCreationFormSchema),
     defaultValues: {
       title: "",
-      questions: [{ type: "INPUT", text: "", correct: "" }],
+      questions: [{ type: QuestionType.INPUT, text: "", correct: "" }],
     },
   });
 
@@ -71,7 +72,6 @@ export default function QuizCreationForm() {
             <QuestionFormCard
               key={field.id}
               index={index}
-              control={form.control}
               remove={remove}
             />
           ))}
@@ -80,7 +80,7 @@ export default function QuizCreationForm() {
             <Button
               type="button"
               onClick={() =>
-                append({ type: "BOOLEAN", text: "", correct: "True" })
+                append({ type: QuestionType.INPUT, text: "", correct: "True" })
               }
             >
               Add Question

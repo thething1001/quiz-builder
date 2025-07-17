@@ -84,4 +84,4 @@ pnpm prisma:seed
 Once the application is running, you can access it as follows, assuming you left all environment variables untouched (using default settings from `.env.example`):
 
 - **Frontend**: [http://localhost:3000](http://localhost:3000)
-- **Backend**: [http://localhost:8000/api](http://localhost:8000/api)
+- **Backend**: [http://localhost:8000/api](http://localhost:8000)

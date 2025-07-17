@@ -17,19 +17,18 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
-import { Control, useFormContext, useWatch } from "react-hook-form";
-
-const questionTypes = ["BOOLEAN", "INPUT", "CHECKBOX"] as const;
+import { useFormContext, useWatch } from "react-hook-form";
+import { QuestionType } from "@/types/quizzes.types";
 
 const QuestionFormCard = ({
   index,
-  control,
   remove,
 }: {
   index: number;
-  control: Control<any>;
   remove: (index: number) => void;
 }) => {
+  const { control, setValue } = useFormContext();
+
   const questionType = useWatch({
     control,
     name: `questions.${index}.type`,
@@ -41,14 +40,12 @@ const QuestionFormCard = ({
     defaultValue: [],
   });
 
-  const { setValue } = useFormContext();
-
   const onTypeChange = (index: number, type: string) => {
-    if (type === "BOOLEAN") {
+    if (type === QuestionType.BOOLEAN) {
       setValue(`questions.${index}.correct`, "True");
-    } else if (type === "INPUT") {
+    } else if (type === QuestionType.INPUT) {
       setValue(`questions.${index}.correct`, "");
-    } else if (type === "CHECKBOX") {
+    } else if (type === QuestionType.CHECKBOX) {
       setValue(`questions.${index}.correct`, []);
       setValue(`questions.${index}.options`, []);
     }
@@ -74,7 +71,7 @@ const QuestionFormCard = ({
                   <SelectValue placeholder="Select question type" />
                 </SelectTrigger>
                 <SelectContent>
-                  {questionTypes.map((type) => (
+                  {Object.values(QuestionType).map((type) => (
                     <SelectItem key={type} value={type}>
                       {type.charAt(0).toUpperCase() +
                         type.slice(1).toLowerCase()}
@@ -102,7 +99,7 @@ const QuestionFormCard = ({
         )}
       />
 
-      {questionType === "BOOLEAN" && (
+      {questionType === QuestionType.BOOLEAN && (
         <FormField
           control={control}
           name={`questions.${index}.correct`}
@@ -135,7 +132,7 @@ const QuestionFormCard = ({
         />
       )}
 
-      {questionType === "INPUT" && (
+      {questionType === QuestionType.INPUT && (
         <FormField
           control={control}
           name={`questions.${index}.correct`}
@@ -151,7 +148,7 @@ const QuestionFormCard = ({
         />
       )}
 
-      {questionType === "CHECKBOX" && (
+      {questionType === QuestionType.CHECKBOX && (
         <div className="space-y-4">
           <FormField
             control={control}

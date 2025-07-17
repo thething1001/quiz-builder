@@ -14,7 +14,7 @@ export type DetailedQuiz = {
   id: string;
   title: string;
   questions: Question[];
-  createdAt: string; // ISO date string
+  createdAt: string;
 };
 export type PostQuiz = {
   title: string;

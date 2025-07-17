@@ -4,11 +4,12 @@ import { deleteQuizByID, getAllQuizzes } from "@/services/quizzes.service";
 import { Quiz } from "@/types/quizzes.types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
+import { Skeleton } from "./ui/skeleton";
 
 const QuizzesList = () => {
   const queryClient = useQueryClient();
 
-  const { data: quizzes } = useQuery<Quiz[]>({
+  const { data: quizzes, isLoading } = useQuery<Quiz[]>({
     queryKey: ["quizzes"],
     queryFn: getAllQuizzes,
   });
@@ -38,11 +39,20 @@ const QuizzesList = () => {
           <Button>Create New</Button>
         </Link>
       </div>
-
       <div className="flex flex-col gap-4  ">
-        {quizzes?.map((quiz) => (
-          <QuizCard key={quiz.id} quiz={quiz} onDelete={onDelete} />
-        ))}
+        {isLoading ? (
+          <>
+            <Skeleton className="w-full min-h-30"></Skeleton>
+            <Skeleton className="w-full min-h-30"></Skeleton>
+            <Skeleton className="w-full min-h-30"></Skeleton>
+          </>
+        ) : (
+          <>
+            {quizzes?.map((quiz) => (
+              <QuizCard key={quiz.id} quiz={quiz} onDelete={onDelete} />
+            ))}
+          </>
+        )}
       </div>
     </section>
   );

@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import QuizzesList from "@/components/quizzes-list";
 import { getQuizByID } from "@/services/quizzes.service";
 import { DetailedQuiz } from "@/types/quizzes.types";
 import { useParams } from "next/navigation";
@@ -23,21 +22,16 @@ export default function Home() {
     }
 
     fetchQuiz();
-  }, []);
+  }, [id]);
 
   return (
     <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
       <section className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold text-center">
-          {quiz?.title}
-        </h1>
-        <p className="text-center">
-          {quiz?.createdAt}
-        </p>
+        <h1 className="text-2xl font-bold text-center">{quiz?.title}</h1>
+        <p className="text-center">{quiz?.createdAt}</p>
       </section>
 
       <QuestionsList questions={quiz?.questions || []} />
-
     </main>
   );
 }

@@ -22,13 +22,14 @@ import {
   quizCreationFormSchema,
 } from "@/types/quizzes.schemas";
 import QuestionFormCard from "./question-form-card";
+import { redirect } from "next/navigation";
 
 export default function QuizCreationForm() {
   const form = useForm<QuizCreationFormSchema>({
     resolver: zodResolver(quizCreationFormSchema),
     defaultValues: {
       title: "",
-      questions: [{ type: "BOOLEAN", text: "", correct: "True" }],
+      questions: [{ type: "INPUT", text: "", correct: "" }],
     },
   });
 
@@ -40,10 +41,11 @@ export default function QuizCreationForm() {
   const onSubmit = (data: QuizCreationFormSchema) => {
     console.log(data);
     postNewQuiz(data);
+    redirect("/");
   };
 
   return (
-    <Card className="w-6/7">
+    <div className="w-6/7">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -90,6 +92,6 @@ export default function QuizCreationForm() {
           </div>
         </form>
       </Form>
-    </Card>
+    </div>
   );
 }

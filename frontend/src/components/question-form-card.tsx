@@ -17,7 +17,7 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
-import { useWatch } from "react-hook-form";
+import { Control, useFormContext, useWatch } from "react-hook-form";
 
 const questionTypes = ["BOOLEAN", "INPUT", "CHECKBOX"] as const;
 
@@ -27,7 +27,7 @@ const QuestionFormCard = ({
   remove,
 }: {
   index: number;
-  control: any;
+  control: Control<any>;
   remove: (index: number) => void;
 }) => {
   const questionType = useWatch({
@@ -35,14 +35,27 @@ const QuestionFormCard = ({
     name: `questions.${index}.type`,
   });
 
-  const options = useWatch({
+  const correct = useWatch({
     control,
-    name: `questions.${index}.options`,
+    name: `questions.${index}.correct`,
     defaultValue: [],
   });
 
+  const { setValue } = useFormContext();
+
+  const onTypeChange = (index: number, type: string) => {
+    if (type === "BOOLEAN") {
+      setValue(`questions.${index}.correct`, "True");
+    } else if (type === "INPUT") {
+      setValue(`questions.${index}.correct`, "");
+    } else if (type === "CHECKBOX") {
+      setValue(`questions.${index}.correct`, []);
+      setValue(`questions.${index}.options`, []);
+    }
+  };
+
   return (
-    <Card className="w-5/7 flex flex-col gap-4 p-4">
+    <Card className="w-6/7 flex flex-col gap-4 p-4">
       <FormField
         control={control}
         name={`questions.${index}.type`}
@@ -50,7 +63,13 @@ const QuestionFormCard = ({
           <FormItem>
             <FormLabel>Question Type</FormLabel>
             <FormControl>
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                onValueChange={(value) => {
+                  field.onChange(value);
+                  onTypeChange(index, value);
+                }}
+                value={field.value}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select question type" />
                 </SelectTrigger>
@@ -138,74 +157,96 @@ const QuestionFormCard = ({
             name={`questions.${index}.options`}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Options (comma separated)</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Option 1, Option 2, Option 3"
-                    value={
-                      Array.isArray(field.value) ? field.value.join(", ") : ""
-                    }
-                    onChange={(e) =>
-                      field.onChange(
-                        e.target.value.split(",").map((o) => o.trim())
-                      )
-                    }
-                  />
+                <FormLabel className="flex flex-row justify-between">
+                  <p>Add options and check correct</p>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      field.onChange([...(field.value || []), ""]);
+                    }}
+                  >
+                    New Option
+                  </Button>
+                </FormLabel>
+                <FormControl className="flex flex-col gap-2 mt-2">
+                  <div className="space-y-2">
+                    {field.value?.map((option: string, optIndex: number) => (
+                      <div
+                        key={optIndex}
+                        className="flex flex-row gap-2 items-center"
+                      >
+                        <Checkbox
+                          checked={correct?.includes(option)}
+                          onCheckedChange={(checked) => {
+                            const updated = checked
+                              ? [...(correct || []), option]
+                              : correct?.filter(
+                                  (val: string) => val !== option,
+                                );
+                            setValue(`questions.${index}.correct`, updated, {
+                              shouldValidate: true,
+                            });
+                          }}
+                        />
+                        <Input
+                          value={option}
+                          placeholder="Enter option text"
+                          onChange={(e) => {
+                            const newValue = e.target.value;
+                            const updatedOptions = [...field.value];
+                            const oldValue = updatedOptions[optIndex];
+
+                            updatedOptions[optIndex] = newValue;
+                            field.onChange(updatedOptions);
+
+                            if (correct.includes(oldValue)) {
+                              const updatedCorrect = correct.map(
+                                (val: string) =>
+                                  val === oldValue ? newValue : val,
+                              );
+                              setValue(
+                                `questions.${index}.correct`,
+                                updatedCorrect,
+                                { shouldValidate: true },
+                              );
+                            }
+                          }}
+                          className="flex-1"
+                        />
+                        <Button
+                          variant="destructive"
+                          type="button"
+                          onClick={() => {
+                            const updatedOptions = field.value.filter(
+                              (_: string, i: number) => i !== optIndex,
+                            );
+                            field.onChange(updatedOptions);
+
+                            const removedOption = field.value[optIndex];
+                            setValue(
+                              `questions.${index}.correct`,
+                              correct?.filter(
+                                (val: string) => val !== removedOption,
+                              ),
+                            );
+                          }}
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <FormField
             control={control}
             name={`questions.${index}.correct`}
-            render={({ field }) => (
+            render={() => (
               <FormItem>
-                {options.length > 0 && (
-                  <>
-                    <FormLabel>Check Correct Answers</FormLabel>
-                    <div className="space-y-2">
-                      {options.map((option: string) => (
-                        <FormField
-                          key={option}
-                          control={control}
-                          name={`questions.${index}.correct`}
-                          render={({ field }) => {
-                            return (
-                              <FormItem
-                                key={option}
-                                className="flex flex-row items-start space-x-3 space-y-0"
-                              >
-                                <FormControl>
-                                  <Checkbox
-                                    checked={field.value?.includes(option)}
-                                    onCheckedChange={(checked) => {
-                                      return checked
-                                        ? field.onChange([
-                                            ...(field.value || []),
-                                            option,
-                                          ])
-                                        : field.onChange(
-                                            field.value?.filter(
-                                              (value: string) =>
-                                                value !== option
-                                            )
-                                          );
-                                    }}
-                                  />
-                                </FormControl>
-                                <FormLabel className="font-normal">
-                                  {option}
-                                </FormLabel>
-                              </FormItem>
-                            );
-                          }}
-                        />
-                      ))}
-                    </div>
-                  </>
-                )}
-
                 <FormMessage />
               </FormItem>
             )}
@@ -217,7 +258,7 @@ const QuestionFormCard = ({
         type="button"
         variant="destructive"
         onClick={() => remove(index)}
-        className="self-end"
+        className="self-start"
       >
         Remove
       </Button>

@@ -30,7 +30,7 @@ export const deleteQuizByID = async (quizId: string): Promise<void> => {
 };
 
 export const postNewQuiz = async (
-  data: QuizCreationFormSchema
+  data: QuizCreationFormSchema,
 ): Promise<void> => {
   const res = await fetch(`${API_BASE_URL}/quizzes`, {
     method: "POST",
@@ -46,7 +46,7 @@ export const postNewQuiz = async (
             return {
               text: question.text,
               type: question.type,
-              options: [], 
+              options: [],
               correct: [question.correct],
             };
           case "CHECKBOX":
@@ -54,7 +54,7 @@ export const postNewQuiz = async (
               text: question.text,
               type: question.type,
               options: question.options,
-              correct: question.correct, 
+              correct: question.correct,
             };
           default:
             throw new Error("Unsupported question type");

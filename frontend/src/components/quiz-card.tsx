@@ -1,8 +1,6 @@
-'use client';
+"use client";
 
-import {
-  Card
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Quiz } from "@/types/quizzes.types";
 import { Button } from "./ui/button";
 import Link from "next/link";

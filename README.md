@@ -66,6 +66,12 @@ pnpm prisma:generate
 pnpm dev
 ```
 
+Run this commands in `backend` if you want to seed the database:
+
+```bash
+pnpm prisma:seed
+```
+
 ---
 
 ### **5. Access the Application**

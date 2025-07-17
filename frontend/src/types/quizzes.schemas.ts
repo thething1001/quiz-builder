@@ -21,7 +21,10 @@ export const quizCreationFormSchema = z.object({
           type: z.literal("CHECKBOX"),
           options: z
             .array(z.string())
-            .min(2, "You must provide at least two options."),
+            .min(2, "You must provide at least two options.")
+            .refine((arr) => arr.every((val) => val.trim() !== ""), {
+              message: "All checkboxes field are required",
+            }),
           correct: z
             .array(z.string())
             .min(1, "You must select at least one correct option."),

@@ -19,7 +19,7 @@ model Question {
   text      String
   type      QuestionType
   options   String[]   
-  correct   String[]   
+  correct   String[]
   quiz      Quiz       @relation(fields: [quizId], references: [id], onDelete: Cascade)
   quizId    String
 }

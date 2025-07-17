@@ -8,11 +8,7 @@ import Link from "next/link";
 const QuizzesList = () => {
   const queryClient = useQueryClient();
 
-  const {
-    data: quizzes,
-    isLoading,
-    error,
-  } = useQuery<Quiz[]>({
+  const { data: quizzes } = useQuery<Quiz[]>({
     queryKey: ["quizzes"],
     queryFn: getAllQuizzes,
   });
@@ -38,7 +34,9 @@ const QuizzesList = () => {
         <h2 className="text-xl font-semibold text-left md:text-left">
           Available quizzes:
         </h2>
-        <Link href="/create"><Button>Create New</Button></Link>
+        <Link href="/create">
+          <Button>Create New</Button>
+        </Link>
       </div>
 
       <div className="flex flex-col gap-4  ">

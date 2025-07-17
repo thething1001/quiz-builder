@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import QuizzesList from "@/components/quizzes-list";
 import { getQuizByID } from "@/services/quizzes.service";
 import { DetailedQuiz } from "@/types/quizzes.types";
 import { useParams } from "next/navigation";
@@ -23,7 +22,7 @@ export default function Home() {
     }
 
     fetchQuiz();
-  }, []);
+  }, [id]);
 
   return (
     <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">

@@ -61,6 +61,11 @@ Run this commands in `backend`:
 
 ```bash
 pnpm db:up
+```
+
+Wait 5-10 seconds for DB to start
+
+```bash
 pnpm prisma:migrate
 pnpm prisma:generate
 pnpm dev

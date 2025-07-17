@@ -69,11 +69,7 @@ export default function QuizCreationForm() {
           </Card>
 
           {fields.map((field, index) => (
-            <QuestionFormCard
-              key={field.id}
-              index={index}
-              remove={remove}
-            />
+            <QuestionFormCard key={field.id} index={index} remove={remove} />
           ))}
 
           <div className="flex flex-row gap-4">

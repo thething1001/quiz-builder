@@ -164,7 +164,7 @@ const QuestionFormCard = ({
                       field.onChange([...(field.value || []), ""]);
                     }}
                   >
-                    <Plus strokeWidth={3}/>
+                    <Plus strokeWidth={3} />
                   </Button>
                 </FormLabel>
                 <FormControl className="flex flex-col gap-2 mt-2">

@@ -8,7 +8,7 @@ type QuestionListProps = {
 };
 
 const QuestionsList = ({ questions }: QuestionListProps) => {
-  const { data: _, isLoading } = useDetailedQuiz();
+  const { isLoading } = useDetailedQuiz();
 
   return (
     <section className="container flex flex-col items-center w-full mb-4 gap-4">

@@ -1,6 +1,6 @@
-# RecipeAPI
+# quiz-builder
 
-Quiz Builder App. Project consists of frontend (**Next.js**) and backend (**Node.js + Express.js + PosgreSQL**)
+Quiz Builder App. Project consists of frontend (**Next.js**) and backend (**Node.js + Express.js + PosgreSQL(Prisma)**)
 
 ---
 
@@ -12,14 +12,15 @@ Ensure you have the following installed:
 
 - **Node.js**
 - **pnpm**
+- **Docker and Docker Compose**
 
 ---
 
 ### **1. Clone the Repository**
 
 ```bash
-git clone https://github.com/thething1001/RecipeAPI.git
-cd RecipeAPI
+git clone https://github.com/thething1001/quiz-builder.git
+cd quiz-builder
 ```
 
 ---
@@ -50,10 +51,25 @@ pnpm install
 
 ### **4. Start the Application**
 
-Run this command in `frontend` and `backend` directories:
+Run this command in `frontend`:
 
 ```bash
 pnpm dev
+```
+
+Run this commands in `backend`:
+
+```bash
+pnpm db:up
+pnpm prisma:migrate
+pnpm prisma:generate
+pnpm dev
+```
+
+Run this commands in `backend` if you want to seed the database:
+
+```bash
+pnpm prisma:seed
 ```
 
 ---

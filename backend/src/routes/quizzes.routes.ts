@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  createNewQuiz,
+  postNewQuiz,
   getAllQuizzes,
   getQuizById,
   deleteQuizById,
@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
   res.json({ message: "Welcome to the Quiz Builder API!" });
 });
 
-router.post("/quizzes", createNewQuiz);
+router.post("/quizzes", postNewQuiz);
 router.get("/quizzes", getAllQuizzes);
 router.get("/quizzes/:id", getQuizById);
 router.delete("/quizzes/:id", deleteQuizById);

@@ -1,0 +1,73 @@
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Question } from "@/types/quizzes.types";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+
+type QuizCardProps = {
+  question: Question;
+};
+
+const QuestionCard = ({ question }: QuizCardProps) => {
+  const renderQuestionContent = () => {
+    switch (question.type) {
+      case "BOOLEAN":
+        return (
+          <RadioGroup disabled>
+            <div className="flex items-center gap-3">
+              <RadioGroupItem value="true" id={`${question.id}-radio-1`} />
+              <Label htmlFor={`${question.id}-radio-1`}>True</Label>
+            </div>
+            <div className="flex items-center gap-3">
+              <RadioGroupItem value="false" id={`${question.id}-radio-2`} />
+              <Label htmlFor={`${question.id}-radio-2`}>False</Label>
+            </div>
+          </RadioGroup>
+        );
+      case "INPUT":
+        return (
+          <Input
+            type="text"
+            placeholder="Enter your answer..."
+            disabled
+          ></Input>
+        );
+      case "CHECKBOX":
+        return (
+          <RadioGroup disabled>
+            {question.options.map((option, index) => (
+              <div key={index} className="flex items-center gap-3">
+                <RadioGroupItem
+                  value={option}
+                  id={`${question.id}-option-${index}`}
+                />
+                <Label htmlFor={`${question.id}-option-${index}`}>
+                  {option}
+                </Label>
+              </div>
+            ))}
+          </RadioGroup>
+        );
+      default:
+        return <p className="text-muted-foreground">Unknown question type.</p>;
+    }
+  };
+
+  return (
+    <Card className="max-w-md my-2 shadow-lg w-full">
+      <CardHeader>
+        <CardTitle>{question.text}</CardTitle>
+        <CardDescription>Correct answer: {question.correct}</CardDescription>
+      </CardHeader>
+      <CardContent>{renderQuestionContent()}</CardContent>
+    </Card>
+  );
+};
+
+export default QuestionCard;

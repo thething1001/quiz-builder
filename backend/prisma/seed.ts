@@ -14,7 +14,7 @@ async function main() {
           {
             text: "The sky is blue.",
             type: "BOOLEAN",
-            correct: ["true"],
+            correct: ["True"],
           },
           {
             text: "What is the capital of France?",
@@ -40,7 +40,7 @@ async function main() {
           {
             text: "The sky is blue.",
             type: "BOOLEAN",
-            correct: ["true"],
+            correct: ["True"],
           },
           {
             text: "What is the capital of France?",
@@ -66,7 +66,7 @@ async function main() {
           {
             text: "The sky is blue.",
             type: "BOOLEAN",
-            correct: ["true"],
+            correct: ["True"],
           },
           {
             text: "What is the capital of France?",

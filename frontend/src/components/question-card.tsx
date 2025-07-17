@@ -20,7 +20,7 @@ const QuestionCard = ({ question }: QuizCardProps) => {
     switch (question.type) {
       case "BOOLEAN":
         return (
-          <RadioGroup disabled>
+          <RadioGroup disabled value={question.correct[0].toLocaleLowerCase()}>
             <div className="flex items-center gap-3">
               <RadioGroupItem value="true" id={`${question.id}-radio-1`} />
               <Label htmlFor={`${question.id}-radio-1`}>True</Label>
@@ -35,7 +35,7 @@ const QuestionCard = ({ question }: QuizCardProps) => {
         return (
           <Input
             type="text"
-            placeholder="Enter your answer..."
+            value={question.correct.join(", ")}
             disabled
           ></Input>
         );

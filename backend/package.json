@@ -5,9 +5,11 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon",
-    "db:up": "sudo docker compose up quiz-db -d",
-    "db:down": "sudo docker compose down",
-    "seed": "ts-node prisma/seed.ts"
+    "db:up": "docker compose up quiz-db -d",
+    "db:down": "docker compose down",
+    "seed": "ts-node prisma/seed.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev --name init"
   },
   "keywords": [],
   "author": "",

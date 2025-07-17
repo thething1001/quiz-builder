@@ -38,7 +38,6 @@ export default function QuizCreationForm() {
     name: "questions",
   });
 
-
   const onSubmit = (data: QuizCreationFormSchema) => {
     console.log(data);
     postNewQuiz(data);

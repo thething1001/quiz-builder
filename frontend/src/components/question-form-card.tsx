@@ -181,7 +181,7 @@ const QuestionFormCard = ({
                             const updated = checked
                               ? [...(correct || []), option]
                               : correct?.filter(
-                                  (val: string) => val !== option
+                                  (val: string) => val !== option,
                                 );
                             setValue(`questions.${index}.correct`, updated, {
                               shouldValidate: true,
@@ -202,12 +202,12 @@ const QuestionFormCard = ({
                             if (correct.includes(oldValue)) {
                               const updatedCorrect = correct.map(
                                 (val: string) =>
-                                  val === oldValue ? newValue : val
+                                  val === oldValue ? newValue : val,
                               );
                               setValue(
                                 `questions.${index}.correct`,
                                 updatedCorrect,
-                                { shouldValidate: true }
+                                { shouldValidate: true },
                               );
                             }
                           }}
@@ -218,7 +218,7 @@ const QuestionFormCard = ({
                           type="button"
                           onClick={() => {
                             const updatedOptions = field.value.filter(
-                              (_: string, i: number) => i !== optIndex
+                              (_: string, i: number) => i !== optIndex,
                             );
                             field.onChange(updatedOptions);
 
@@ -226,8 +226,8 @@ const QuestionFormCard = ({
                             setValue(
                               `questions.${index}.correct`,
                               correct?.filter(
-                                (val: string) => val !== removedOption
-                              )
+                                (val: string) => val !== removedOption,
+                              ),
                             );
                           }}
                         >

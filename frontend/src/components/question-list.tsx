@@ -7,9 +7,9 @@ type QuestionListProps = {
 const QuestionsList = ({ questions }: QuestionListProps) => {
   return (
     <section className="container flex flex-col items-center w-full mb-4">
-        {questions.map((question) => (
-          <QuestionCard key={question.id} question={question} />
-        ))}
+      {questions.map((question) => (
+        <QuestionCard key={question.id} question={question} />
+      ))}
     </section>
   );
 };

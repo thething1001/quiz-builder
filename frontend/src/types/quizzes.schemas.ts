@@ -29,7 +29,7 @@ export const quizCreationFormSchema = z.object({
             .array(z.string())
             .min(1, "You must select at least one correct option."),
         }),
-      ])
+      ]),
     )
     .min(1, "Add at least one question"),
 });

@@ -46,13 +46,13 @@ export default function QuizCreationForm() {
   };
 
   return (
-    <div className="w-6/7">
+    <div className="w-full md:w-6/7">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4 justify-center items-center"
         >
-          <Card className="w-6/7 p-4">
+          <Card className="w-full md:w-6/7 p-4">
             <FormField
               control={form.control}
               name="title"

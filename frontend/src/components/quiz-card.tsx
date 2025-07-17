@@ -30,7 +30,7 @@ const QuizCard = ({ quiz, onDelete }: QuizCardProps) => {
           Total Questions: {quiz.questions}
         </p>
       </div>
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-col items-end gap-4 md:flex-row">
         <Link href={`/quizzes/${quiz.id}`}>
           <Button>View</Button>
         </Link>

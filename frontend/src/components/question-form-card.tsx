@@ -19,6 +19,7 @@ import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { useFormContext, useWatch } from "react-hook-form";
 import { QuestionType } from "@/types/quizzes.types";
+import { Plus, Trash } from "lucide-react";
 
 const QuestionFormCard = ({
   index,
@@ -52,7 +53,7 @@ const QuestionFormCard = ({
   };
 
   return (
-    <Card className="w-6/7 flex flex-col gap-4 p-4">
+    <Card className="w-full md:w-6/7 flex flex-col gap-4 p-4">
       <FormField
         control={control}
         name={`questions.${index}.type`}
@@ -163,7 +164,7 @@ const QuestionFormCard = ({
                       field.onChange([...(field.value || []), ""]);
                     }}
                   >
-                    New Option
+                    <Plus strokeWidth={3}/>
                   </Button>
                 </FormLabel>
                 <FormControl className="flex flex-col gap-2 mt-2">
@@ -229,7 +230,7 @@ const QuestionFormCard = ({
                             );
                           }}
                         >
-                          Remove
+                          <Trash />
                         </Button>
                       </div>
                     ))}

@@ -1,4 +1,4 @@
-# RecipeAPI
+# quiz-builder
 
 Quiz Builder App. Project consists of frontend (**Next.js**) and backend (**Node.js + Express.js + PosgreSQL**)
 

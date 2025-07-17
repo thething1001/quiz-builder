@@ -36,6 +36,7 @@ export const getQuizById = async (req: Request, res: Response) => {
 
 export const deleteQuizById = async (req: Request, res: Response) => {
   try {
+    console.log("Deleting quiz with ID:", req.params.id);
     await QuizzesService.deleteQuizById(req.params.id);
     res.json({ success: true });
   } catch (err) {

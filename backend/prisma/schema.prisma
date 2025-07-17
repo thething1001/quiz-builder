@@ -10,7 +10,7 @@ datasource db {
 model Quiz {
   id        String     @id @default(uuid())
   title     String
-  questions Question[]
+  questions Question[] 
   createdAt DateTime   @default(now())
 }
 
@@ -20,7 +20,7 @@ model Question {
   type      QuestionType
   options   String[]   
   correct   String[]   
-  quiz      Quiz       @relation(fields: [quizId], references: [id])
+  quiz      Quiz       @relation(fields: [quizId], references: [id], onDelete: Cascade)
   quizId    String
 }
 
